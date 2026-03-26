@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Producto | DEREK'S</title><link rel="stylesheet" href="styles.css"></head><body>
+<div class="topbar">Producto individual · Mayoreo desde 6 piezas · WhatsApp 899 318 4867</div>
+<header><div class="container nav"><a class="brand" href="index.html"><img src="assets/logo.png" alt=""><div class="brand-name">DEREK'S</div></a><div class="nav-actions"><button class="icon-btn" id="openCartBtn">Carrito <span class="badge-count" id="cartCount">0</span></button></div></div></header>
+<main class="container"><a href="index.html" class="meta" style="display:inline-block;margin-top:18px;">← Volver al catálogo</a><section class="product-page"><div class="product-visual"><img id="prodImage" src="" alt=""></div><div class="product-info"><span class="pill" id="prodBrand"></span><h1 id="prodName"></h1><p class="meta" id="prodDesc"></p><p class="meta" id="mayoreoText"></p><div class="price-line"><div class="price" id="prodPrice"></div><div class="old-price" id="prodOldPrice"></div><span class="stock" id="prodStock"></span></div><h3 style="margin:18px 0 10px;">Talla</h3><div class="sizes" id="sizes"></div><div class="meta" id="prodSizes" style="margin-top:-6px;"></div><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;"><button class="btn btn-primary" id="addToCartBtn">Agregar al carrito</button><button class="btn btn-secondary" id="buyWhatsBtn">Comprar ahora 🔥</button></div><div class="info-grid"><div class="info-box"><strong>Marca</strong><div class="meta" id="infoBrand"></div></div><div class="info-box"><strong>Tipo</strong><div class="meta" id="infoType"></div></div><div class="info-box"><strong>Stock</strong><div class="meta" id="infoStock"></div></div><div class="info-box"><strong>Compra</strong><div class="meta">Carrito o WhatsApp</div></div></div></div></section></main>
+<div class="overlay" id="overlay"></div><aside class="cart-drawer" id="cartDrawer"><div class="cart-head"><div><h3 style="margin:0;">Carrito</h3><div class="meta">Compra multimarca · Mayoreo desde 6 piezas</div></div><button class="icon-btn" id="closeCartBtn">Cerrar</button></div><div class="cart-items" id="cartItems"></div><div class="cart-footer"><div class="row" style="margin-bottom:12px;"><strong>Subtotal</strong><strong id="cartSubtotal">$0 MXN</strong></div><div class="row" style="margin-bottom:16px;"><span class="meta">Productos</span><span class="meta" id="cartSummary">0 artículos</span></div><div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-primary" style="width:100%;" id="goCheckoutBtn">Ir a checkout</button><button class="btn btn-secondary" style="width:100%;" id="clearCartBtn">Vaciar carrito</button></div></div></aside>
+<script src="catalogo_facil.js"></script><script>
+
+function money(v){ return '$' + Number(v).toLocaleString('es-MX') + ' MXN'; }
+function getCart(){ return JSON.parse(localStorage.getItem('dereks_cart') || '[]'); }
+function setCart(cart){ localStorage.setItem('dereks_cart', JSON.stringify(cart)); updateCartCount(); }
+function updateCartCount(){
+  const count = getCart().reduce((s,i)=>s+(i.qty||0),0);
+  const el = document.getElementById('cartCount');
+  if(el) el.textContent = count;
+}
+function openCart(){
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeCart(){
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+function changeQty(key, delta){
+  let cart = getCart();
+  const item = cart.find(i => i.key === key);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) cart = cart.filter(i => i.key !== key);
+  setCart(cart);
+  renderCart();
+}
+function clearCart(){ setCart([]); renderCart(); }
+function renderCart(){
+  const cart = getCart();
+  const itemsEl = document.getElementById('cartItems');
+  const subtotalEl = document.getElementById('cartSubtotal');
+  const summaryEl = document.getElementById('cartSummary');
+  if(!itemsEl) return;
+  const totalItems = cart.reduce((s,i)=>s+i.qty,0);
+  const isWholesale = totalItems >= 6;
+  const total = cart.reduce((s,i)=>s+i.qty*((isWholesale && i.wholesale_price) ? i.wholesale_price : i.price),0);
+  subtotalEl.textContent = money(total);
+  summaryEl.textContent = totalItems + ' artículos' + (isWholesale ? ' · Mayoreo activo' : '');
+  if(!cart.length){ itemsEl.innerHTML = '<div class="empty">Tu carrito está vacío.</div>'; return; }
+  itemsEl.innerHTML = cart.map(item => {
+    const unit = (isWholesale && item.wholesale_price) ? item.wholesale_price : item.price;
+    return '<div class="cart-item"><div class="cart-thumb"><img loading="lazy" decoding="async" src="' + item.image + '" alt="' + item.name + '"></div><div><strong>' + item.name + '</strong><div class="meta">' + item.brand + (item.size ? ' · Talla ' + item.size : '') + '</div><div class="meta">' + money(unit) + ' c/u</div><div class="qty"><button onclick="changeQty(\'' + item.key + '\', -1)">−</button><span>' + item.qty + '</span><button onclick="changeQty(\'' + item.key + '\', 1)">+</button></div></div><strong>' + money(item.qty*unit) + '</strong></div>';
+  }).join('');
+}
+
+const all=[]; for (const [brand, items] of Object.entries(CATALOGO)) items.forEach(item => all.push({...item, brand}));
+const id = new URLSearchParams(window.location.search).get('id');
+const p = all.find(x => x.id === id) || all[0];
+document.title = p.name + ' | ' + p.brand;
+document.getElementById('prodImage').src = p.image;
+document.getElementById('prodBrand').textContent = p.brand;
+document.getElementById('prodName').textContent = p.name;
+document.getElementById('prodDesc').textContent = p.desc;
+document.getElementById('mayoreoText').innerHTML = 'Mayoreo desde ' + p.wholesale_min_qty + ' piezas: <strong style="color:#f1cb91;">' + money(p.wholesale_price) + '</strong> por pieza.';
+document.getElementById('prodPrice').textContent = money(p.price);
+document.getElementById('prodOldPrice').textContent = money(p.old_price);
+document.getElementById('prodStock').textContent = p.stock <= 2 ? 'Pocas piezas' : 'Disponible';
+document.getElementById('prodStock').classList.add(p.stock <= 2 ? 'low' : 'ok');
+document.getElementById('infoBrand').textContent = p.brand;
+document.getElementById('infoType').textContent = p.type;
+document.getElementById('infoStock').textContent = p.stock + ' piezas';
+const sizes = document.getElementById('sizes');
+sizes.innerHTML = p.sizes.map((s,i) => '<button class="size-btn'+(i===0?' active':'')+'" type="button" data-size="'+s+'">'+s+'</button>').join('');
+let selectedSize = p.sizes[0];
+document.getElementById('prodSizes').textContent = 'Talla seleccionada: ' + selectedSize;
+document.querySelectorAll('.size-btn').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedSize = btn.dataset.size; document.getElementById('prodSizes').textContent = 'Talla seleccionada: ' + selectedSize; }));
+document.getElementById('addToCartBtn').addEventListener('click', () => addToCartFromData(p, selectedSize));
+document.getElementById('buyWhatsBtn').addEventListener('click', () => { const msg = ["Hola, vi tu página y quiero este producto de DEREK'S:","","• "+p.name+" - Talla "+selectedSize,"Precio: "+money(p.price),"Mayoreo desde "+p.wholesale_min_qty+" piezas: "+money(p.wholesale_price),"","¿Está disponible?"].join("\n"); window.open('https://wa.me/528993184867?text=' + encodeURIComponent(msg), '_blank'); });
+updateCartCount(); renderCart();
+document.getElementById('openCartBtn').addEventListener('click', openCart);
+document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+document.getElementById('clearCartBtn').addEventListener('click', clearCart);
+document.getElementById('overlay').addEventListener('click', closeCart);
+document.getElementById('goCheckoutBtn').addEventListener('click', () => window.location.href = 'checkout.html');
+</script><a href="https://wa.me/528993184867?text=Hola,%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n" target="_blank" class="whatsapp-float">💬</a>
+</body></html>

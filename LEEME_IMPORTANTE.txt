@@ -1,0 +1,12 @@
+ABRE ESTE PROYECTO COMPLETO.
+
+No abras solo index.html suelto en otra carpeta.
+Extrae TODO el ZIP en una misma carpeta y deja juntos:
+- index.html
+- styles.css
+- catalogo_facil.js
+- producto.html
+- checkout.html
+- carpeta assets
+
+Luego sí abre index.html.
