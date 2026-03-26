@@ -34,7 +34,7 @@ const CATALOGO = {
         "G",
         "XL"
       ],
-      "image": "assets/ddd.png",
+      "image": "assets/DDD.png",
       "badge": "DEREK'S",
       "desc": "FULLBACK JESUS CON CORONA."
     },
