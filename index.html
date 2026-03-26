@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<meta name="theme-color" content="#000000">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEREK'S | MEN'S CLOTHING</title>
+<link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#0a0b0f">
+
+<style>
+.brand-filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.brand-filter{
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-weight:800;
+  background:rgba(255,255,255,.03);
+  color:var(--text);
+  border:1px solid var(--line);
+  transition:.2s ease;
+}
+.brand-filter:hover{
+  transform:translateY(-1px);
+  border-color:rgba(214,161,91,.36);
+}
+.brand-filter.active{
+  background:linear-gradient(135deg,#fff0cb 0%,#e3b66d 38%,#a86820 100%);
+  color:#111;
+  border-color:transparent;
+  box-shadow:0 12px 24px rgba(214,161,91,.22);
+}
+</style>
+
+</head>
+<body>
+<div class="topbar">DEREK'S · MEN´S CLOTHING · WhatsApp 899 318 4867</div>
+<header><div class="container nav">
+<a class="brand" href="index.html"><img src="assets/logo.png" alt="Logo DEREK'S"><div class="brand-name">DEREK'S</div></a>
+<nav class="nav-links"><a href="#best-sellers">Lo más vendido</a><a href="#categorias">Categorías</a><a href="#catalogo">Catálogo</a><a href="#como-comprar">Cómo comprar</a><a href="#faq">FAQ</a><a href="#contacto">Contacto</a></nav>
+<div class="nav-actions">
+      <a class="icon-btn" href="https://www.instagram.com/dereks_mensclothing?igsh=b3JqNTJ2YTMyaWI5&utm_source=qr" target="_blank">Instagram</a>
+      <a class="icon-btn" href="https://www.facebook.com/share/18UAruN26Q/?mibextid=wwXIfr" target="_blank">Facebook</a>
+      <a class="icon-btn" href="https://www.tiktok.com/@dereks0587?_r=1&_t=ZS-94v1YyiGRBw" target="_blank">TikTok</a>
+      <button class="icon-btn" id="openCartBtn">Carrito <span class="badge-count" id="cartCount">0</span></button>
+    </div>
+</div></header>
+<main class="container">
+<section class="hero">
+<div>
+<span class="eyebrow">DEREK'S · COLECCIÓN PREMIUM</span>
+<h1>No es ropa. Es identidad.</h1>
+<p>Diseños exclusivos de DEREK'S. Compra por pieza o mayoreo desde 6 prendas. Calidad, presencia y estilo en cada pieza.</p>
+<div class="hero-actions"><a href="#catalogo" class="btn btn-primary">Ver colección 🔥</a><a href="#best-sellers" class="btn btn-secondary">Lo más vendido</a></div>
+<div class="benefits-strip"><div class="benefit-pill">🚚 Envíos a todo México</div><div class="benefit-pill">💰 Gana revendiendo · mayoreo desde 6 piezas</div><div class="benefit-pill">⚡ Compra rápida por WhatsApp</div></div>
+</div>
+<div class="hero-grid">
+<div class="hero-card-main"><img src="assets/dereks-sacrifice-gold.png" alt=""><div class="hero-card-overlay"><span class="hero-mini">BEST SELLER</span><strong>Compra rápida</strong><span>Diseños premium con presencia real.</span></div></div>
+<div class="hero-card-main"><img src="assets/dereks-king-of-kings.png" alt=""><div class="hero-card-overlay"><span class="hero-mini">NUEVA COLECCIÓN</span><strong>Más identidad</strong><span>Marca fuerte y piezas seleccionadas.</span></div></div>
+</div>
+</section>
+
+<section id="best-sellers"><div class="section-head"><div><h2>🔥 Lo más vendido</h2><p>Los favoritos de nuestros clientes.</p></div></div><div class="product-grid" id="grid-best"></div></section>
+<section id="categorias"><div class="section-head"><div><h2>Categorías</h2><p>Encuentra más rápido lo que buscas.</p></div></div><div class="grid-categorias"><div class="categoria-card">Playeras</div><div class="categoria-card">Gorras</div><div class="categoria-card">Sudaderas</div><div class="categoria-card">Accesorios</div></div></section>
+
+<section id="marcas">
+  <div class="section-head">
+    <div>
+      <h2>Marcas</h2>
+      <p>Filtra rápido por la marca que quieres ver.</p>
+    </div>
+  </div>
+  <div class="brand-filters" id="brandFilters">
+    <button class="brand-filter active" data-brand="all">Todas</button>
+    <button class="brand-filter" data-brand="DEREK'S">DEREK'S</button>
+    <button class="brand-filter" data-brand="BOSS">BOSS</button>
+    <button class="brand-filter" data-brand="HUGO">HUGO</button>
+    <button class="brand-filter" data-brand="DANDY">DANDY</button>
+  </div>
+</section>
+
+<section id="catalogo"><div class="section-head"><div><h2>Catálogo</h2><p>Catálogo organizado por marcas.</p></div></div><div class="toolbar"><label class="search"><span>🔎</span><input id="searchInput" type="text" placeholder="Buscar producto, marca o tipo..."></label></div><div id="brandsContainer"></div></section>
+<section id="como-comprar"><div class="section-head"><div><h2>¿Cómo comprar?</h2><p>Proceso rápido y claro.</p></div></div><div class="info-cards"><div class="info-card"><strong>1. Elige tu producto</strong><span class="meta">Explora la colección y entra a la pieza que te guste.</span></div><div class="info-card"><strong>2. Selecciona talla</strong><span class="meta">Escoge CH, M, G o XL según disponibilidad.</span></div><div class="info-card"><strong>3. Agrégalo al carrito</strong><span class="meta">Junta tus productos y activa mayoreo desde 6 piezas.</span></div><div class="info-card"><strong>4. Finaliza por WhatsApp</strong><span class="meta">Envía tu pedido y confirma disponibilidad.</span></div></div></section>
+<section id="faq"><div class="section-head"><div><h2>Preguntas frecuentes</h2><p>Lo más importante antes de comprar.</p></div></div><div class="faq-list"><div class="faq-item"><strong>¿Hacen envíos?</strong><span class="meta">Sí, puedes tomar pedidos para envío a todo México.</span></div><div class="faq-item"><strong>¿Hay mayoreo?</strong><span class="meta">Sí, se activa automáticamente desde 6 piezas en el carrito.</span></div><div class="faq-item"><strong>¿Cómo confirmo mi pedido?</strong><span class="meta">Tu pedido se envía por WhatsApp para validar disponibilidad y pago.</span></div><div class="faq-item"><strong>¿Cómo elijo talla?</strong><span class="meta">Cada producto tiene selección de talla en su página individual.</span></div></div></section>
+<section id="contacto"><div class="section-head"><div><h2>Contacto</h2><p>SIGUENOS EN NUESTRAS REDES.</p></div></div><div class="brand-block"><div class="meta">WhatsApp: 899 318 4867</div><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+<a class="btn btn-primary" href="https://wa.me/528993184867" target="_blank">WhatsApp</a>
+<a class="btn btn-secondary" href="https://www.instagram.com/dereks_mensclothing?igsh=b3JqNTJ2YTMyaWI5&utm_source=qr" target="_blank">Instagram</a>
+<a class="btn btn-secondary" href="https://www.facebook.com/share/18UAruN26Q/?mibextid=wwXIfr" target="_blank">Facebook</a>
+<a class="btn btn-secondary" href="https://www.tiktok.com/@dereks0587?_r=1&_t=ZS-94v1YyiGRBw" target="_blank">TikTok</a>
+</div></div></section>
+</main>
+
+<div class="overlay" id="overlay"></div>
+<aside class="cart-drawer" id="cartDrawer"><div class="cart-head"><div><h3 style="margin:0;">Carrito</h3><div class="meta">Compra multimarca · Mayoreo desde 6 piezas</div></div><button class="icon-btn" id="closeCartBtn">Cerrar</button></div><div class="cart-items" id="cartItems"></div><div class="cart-footer"><div class="row" style="margin-bottom:12px;"><strong>Subtotal</strong><strong id="cartSubtotal">$0 MXN</strong></div><div class="row" style="margin-bottom:16px;"><span class="meta">Productos</span><span class="meta" id="cartSummary">0 artículos</span></div><div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-primary" style="width:100%;" id="goCheckoutBtn">Ir a checkout</button><button class="btn btn-secondary" style="width:100%;" id="clearCartBtn">Vaciar carrito</button></div></div></aside>
+
+<footer><div class="container">© 2026 DEREK'S | BY THEO VELOZ</div></footer>
+
+<script src="catalogo_facil.js"></script>
+<script>
+
+function money(v){ return '$' + Number(v).toLocaleString('es-MX') + ' MXN'; }
+function getCart(){ return JSON.parse(localStorage.getItem('dereks_cart') || '[]'); }
+function setCart(cart){ localStorage.setItem('dereks_cart', JSON.stringify(cart)); updateCartCount(); }
+function updateCartCount(){
+  const count = getCart().reduce((s,i)=>s+(i.qty||0),0);
+  const el = document.getElementById('cartCount');
+  if(el) el.textContent = count;
+}
+function openCart(){
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeCart(){
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+function changeQty(key, delta){
+  let cart = getCart();
+  const item = cart.find(i => i.key === key);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) cart = cart.filter(i => i.key !== key);
+  setCart(cart);
+  renderCart();
+}
+function clearCart(){ setCart([]); renderCart(); }
+function renderCart(){
+  const cart = getCart();
+  const itemsEl = document.getElementById('cartItems');
+  const subtotalEl = document.getElementById('cartSubtotal');
+  const summaryEl = document.getElementById('cartSummary');
+  if(!itemsEl) return;
+  const totalItems = cart.reduce((s,i)=>s+i.qty,0);
+  const isWholesale = totalItems >= 6;
+  const total = cart.reduce((s,i)=>s+i.qty*((isWholesale && i.wholesale_price) ? i.wholesale_price : i.price),0);
+  subtotalEl.textContent = money(total);
+  summaryEl.textContent = totalItems + ' artículos' + (isWholesale ? ' · Mayoreo activo' : '');
+  if(!cart.length){ itemsEl.innerHTML = '<div class="empty">Tu carrito está vacío.</div>'; return; }
+  itemsEl.innerHTML = cart.map(item => {
+    const unit = (isWholesale && item.wholesale_price) ? item.wholesale_price : item.price;
+    return '<div class="cart-item"><div class="cart-thumb"><img loading="lazy" decoding="async" src="' + item.image + '" alt="' + item.name + '"></div><div><strong>' + item.name + '</strong><div class="meta">' + item.brand + (item.size ? ' · Talla ' + item.size : '') + '</div><div class="meta">' + money(unit) + ' c/u</div><div class="qty"><button onclick="changeQty(\'' + item.key + '\', -1)">−</button><span>' + item.qty + '</span><button onclick="changeQty(\'' + item.key + '\', 1)">+</button></div></div><strong>' + money(item.qty*unit) + '</strong></div>';
+  }).join('');
+}
+
+function flattenCatalogo(){ const all=[]; for (const [brand, items] of Object.entries(CATALOGO)) items.forEach(item => all.push({...item, brand, url:'producto.html?id='+item.id})); return all; }
+const PRODUCTS = flattenCatalogo();
+let searchTerm = '';
+let activeBrand = 'all';
+function matchesSearch(p){
+  const q = searchTerm.toLowerCase();
+  const textMatch = !q || [p.name,p.brand,p.type,p.desc].join(' ').toLowerCase().includes(q);
+  const brandMatch = activeBrand === 'all' || p.brand === activeBrand;
+  return textMatch && brandMatch;
+}
+function renderGrid(id, items){ const el=document.getElementById(id); if(!el) return; el.innerHTML = items.map(product => '<article class="product-card"><div class="product-media" data-badge="'+product.badge+'"><img loading="lazy" decoding="async" src="'+product.image+'" alt="'+product.name+'"></div><div class="product-body"><div class="row"><span class="pill">'+product.brand+'</span><span class="stock '+(product.stock<=2?'low':'ok')+'">'+(product.stock<=2?'Pocas piezas':'Disponible')+'</span></div><h3>'+product.name+'</h3><p class="meta">'+product.desc+'</p><div><div class="price">'+money(product.price)+'</div><div class="old-price">'+money(product.old_price)+'</div><div class="meta" style="margin-top:6px;">Mayoreo desde '+product.wholesale_min_qty+' piezas: <strong style="color:#f1cb91;">'+money(product.wholesale_price)+'</strong></div></div><div class="row" style="margin-top:10px;"><span class="pill">'+product.type+'</span><a class="btn btn-primary" href="'+product.url+'">Ver producto</a></div></div></article>').join(''); }
+function renderBrands(){ const container=document.getElementById('brandsContainer'); container.innerHTML = Object.entries(CATALOGO).map(([brand, items]) => { const prepared = items.map(item => ({...item, brand, url:'producto.html?id='+item.id})).filter(matchesSearch); if(!prepared.length) return ''; return '<div class="brand-block"><div class="brand-title"><h3>'+brand+'</h3><span class="pill">'+brand+'</span></div><div class="product-grid">'+prepared.map(product => '<article class="product-card"><div class="product-media" data-badge="'+product.badge+'"><img loading="lazy" decoding="async" src="'+product.image+'" alt="'+product.name+'"></div><div class="product-body"><div class="row"><span class="pill">'+product.brand+'</span><span class="stock '+(product.stock<=2?'low':'ok')+'">'+(product.stock<=2?'Pocas piezas':'Disponible')+'</span></div><h3>'+product.name+'</h3><p class="meta">'+product.desc+'</p><div><div class="price">'+money(product.price)+'</div><div class="old-price">'+money(product.old_price)+'</div><div class="meta" style="margin-top:6px;">Mayoreo desde '+product.wholesale_min_qty+' piezas: <strong style="color:#f1cb91;">'+money(product.wholesale_price)+'</strong></div></div><div class="row" style="margin-top:10px;"><span class="pill">'+product.type+'</span><a class="btn btn-primary" href="'+product.url+'">Ver producto</a></div></div></article>').join('')+'</div></div>'; }).join('') || '<div class="brand-block"><div class="meta">No se encontraron productos.</div></div>'; }
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('searchInput').addEventListener('input', e => { searchTerm = e.target.value.trim(); renderBrands(); });
+  document.querySelectorAll('.brand-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.brand-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeBrand = btn.dataset.brand;
+      renderBrands();
+    });
+  });
+
+  renderGrid('grid-best', PRODUCTS.filter(p => p.featured).slice(0,4));
+  renderBrands();
+  updateCartCount();
+  renderCart();
+  document.getElementById('openCartBtn').addEventListener('click', openCart);
+  document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+  document.getElementById('clearCartBtn').addEventListener('click', clearCart);
+  document.getElementById('overlay').addEventListener('click', closeCart);
+  document.getElementById('goCheckoutBtn').addEventListener('click', () => window.location.href = 'checkout.html');
+});
+</script>
+<a href="https://wa.me/528993184867?text=Hola,%20vi%20tu%20p%C3%A1gina%20y%20quiero%20informaci%C3%B3n" target="_blank" class="whatsapp-float">💬</a>
+</body></html>
